@@ -1,0 +1,262 @@
+@import "tailwindcss";
+
+@theme {
+  --font-inter: "Inter", sans-serif;
+  --font-space: "Space Grotesk", monospace;
+
+  /* ── Backgrounds ─────────────────────────────────── */
+  --color-background:                  #0A0F1C;   /* deep space navy  */
+  --color-surface:                     #0A0F1C;
+  --color-surface-dim:                 #070B15;
+  --color-surface-bright:              #1a2235;
+  --color-surface-container-lowest:    #050810;
+  --color-surface-container-low:       #0D1424;
+  --color-surface-container:           #111827;   /* card base        */
+  --color-surface-container-high:      #1a2535;
+  --color-surface-container-highest:   #232f42;
+
+  /* ── Text ────────────────────────────────────────── */
+  --color-on-surface:                  #E5E7EB;   /* primary text     */
+  --color-on-surface-variant:          #9CA3AF;   /* muted text       */
+  --color-on-background:               #E5E7EB;
+  --color-inverse-surface:             #E5E7EB;
+  --color-inverse-on-surface:          #111827;
+
+  /* ── Borders ─────────────────────────────────────── */
+  --color-outline:                     #374151;   /* slightly lighter */
+  --color-outline-variant:             #1F2937;   /* card borders     */
+
+  /* ── Primary — Indigo ────────────────────────────── */
+  --color-surface-tint:                #6366F1;
+  --color-primary:                     #6366F1;
+  --color-on-primary:                  #ffffff;
+  --color-primary-container:           #1e1f5e;
+  --color-on-primary-container:        #c7c8ff;
+  --color-inverse-primary:             #4345c8;
+
+  /* ── Secondary — Cyan ────────────────────────────── */
+  --color-secondary:                   #22D3EE;
+  --color-on-secondary:                #003340;
+  --color-secondary-container:         #0e4a58;
+  --color-on-secondary-container:      #a5f3fc;
+
+  /* ── Tertiary — kept warm amber for alerts ───────── */
+  --color-tertiary:                    #fb923c;
+  --color-on-tertiary:                 #431400;
+  --color-tertiary-container:          #7c2d12;
+  --color-on-tertiary-container:       #fed7aa;
+
+  /* ── Error ───────────────────────────────────────── */
+  --color-error:                       #f87171;
+  --color-on-error:                    #7f1d1d;
+  --color-error-container:             #450a0a;
+  --color-on-error-container:          #fecaca;
+
+  /* ── Spacing (unchanged) ─────────────────────────── */
+  --spacing-base:            4px;
+  --spacing-xs:              4px;
+  --spacing-sm:              8px;
+  --spacing-md:              16px;
+  --spacing-lg:              24px;
+  --spacing-xl:              48px;
+  --spacing-2xl:             64px;
+  --spacing-gutter:          24px;
+  --spacing-container-max:   1440px;
+}
+
+/* ─── Light Theme Overrides ──────────────────────────────────── */
+.light {
+  --color-background:                  #F9FAFB;
+  --color-surface:                     #F9FAFB;
+  --color-surface-dim:                 #EEF0F5;
+  --color-surface-bright:              #ffffff;
+  --color-surface-container-lowest:    #ffffff;
+  --color-surface-container-low:       #F3F4F6;
+  --color-surface-container:           #E9EBF0;
+  --color-surface-container-high:      #DDE0E8;
+  --color-surface-container-highest:   #D1D5DF;
+  --color-on-surface:                  #111827;
+  --color-on-surface-variant:          #4B5563;
+  --color-on-background:               #111827;
+  --color-inverse-surface:             #111827;
+  --color-inverse-on-surface:          #E9EBF0;
+  --color-outline:                     #9CA3AF;
+  --color-outline-variant:             #D1D5DB;
+  --color-surface-tint:                #4F46E5;
+  --color-primary:                     #4F46E5;
+  --color-on-primary:                  #ffffff;
+  --color-primary-container:           #EEF2FF;
+  --color-on-primary-container:        #312E81;
+  --color-inverse-primary:             #6366F1;
+  --color-secondary:                   #0891B2;
+  --color-on-secondary:                #ffffff;
+  --color-secondary-container:         #CFFAFE;
+  --color-on-secondary-container:      #164E63;
+  --color-error:                       #DC2626;
+  --color-on-error:                    #ffffff;
+  --color-error-container:             #FEE2E2;
+  --color-on-error-container:          #7F1D1D;
+}
+
+/* ─── Light Mode component overrides ─────────────────────────── */
+
+/* Glass surfaces */
+.light .glass {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(99, 102, 241, 0.15);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+}
+
+.light .inner-glow {
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.95), 0 1px 6px rgba(0, 0, 0, 0.07);
+}
+
+.light .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.2);
+}
+
+/* ── Flip hardcoded white/neutral text to dark ── */
+
+/* text-white → near-black */
+.light .text-white {
+  color: #111827 !important;
+}
+
+/* text-neutral-* → progressively darker equivalents */
+.light .text-neutral-100 { color: #1f2937 !important; }
+.light .text-neutral-200 { color: #374151 !important; }
+.light .text-neutral-300 { color: #4b5563 !important; }
+.light .text-neutral-400 { color: #6b7280 !important; }
+.light .text-neutral-500 { color: #4b5563 !important; }
+.light .text-neutral-600 { color: #374151 !important; }
+
+/* Preserve accent colours — don't flip indigo/cyan/green/red */
+.light .text-indigo-400  { color: #4f46e5 !important; }
+.light .text-indigo-300  { color: #6366f1 !important; }
+.light .text-purple-400  { color: #7c3aed !important; }
+.light .text-secondary   { color: #0891b2 !important; }
+.light .text-error       { color: #dc2626 !important; }
+.light .text-emerald-400 { color: #059669 !important; }
+.light .text-red-400     { color: #dc2626 !important; }
+.light .text-cyan-400    { color: #0891b2 !important; }
+
+/* ── Dark bg surfaces → light equivalents ── */
+.light .bg-neutral-950,
+.light .bg-neutral-950\/80 {
+  background-color: #ffffff !important;
+}
+
+.light .bg-neutral-900 {
+  background-color: #f9fafb !important;
+}
+
+/* bg-white\/5 and similar ghost surfaces */
+.light .bg-white\/5  { background-color: rgba(0, 0, 0, 0.03) !important; }
+.light .bg-white\/10 { background-color: rgba(0, 0, 0, 0.06) !important; }
+
+/* ── Borders ── */
+.light .border-white\/10 { border-color: rgba(0, 0, 0, 0.1) !important; }
+.light .border-white\/5  { border-color: rgba(0, 0, 0, 0.06) !important; }
+.light .border-white\/20 { border-color: rgba(0, 0, 0, 0.14) !important; }
+
+/* ── Sidebar and TopBar ── */
+.light aside,
+.light header {
+  background-color: #ffffff;
+  border-color: rgba(0, 0, 0, 0.07);
+}
+
+/* Font mono (code-style text) */
+.light .font-mono {
+  color: #374151;
+}
+
+/* ─── Base ────────────────────────────────────────────────────── */
+body {
+  background-color: var(--color-background);
+  color: var(--color-on-surface);
+  font-family: var(--font-inter);
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── Glass utility ──────────────────────────────────────────── */
+.glass {
+  background: rgba(17, 24, 39, 0.6);    /* #111827 @ 60% */
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(31, 41, 55, 0.8);  /* #1F2937 border */
+}
+
+.inner-glow {
+  box-shadow:
+    inset 0 1px 0 0 rgba(99, 102, 241, 0.08),   /* subtle indigo top edge */
+    0 0 0 1px rgba(31, 41, 55, 0.6);
+}
+
+/* ─── Accent glow utilities ──────────────────────────────────── */
+.glow-indigo {
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.35);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
+}
+
+/* ─── Shimmer border ─────────────────────────────────────────── */
+.shimmer-border {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-border::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg, transparent, rgba(99, 102, 241, 0.18), transparent 30%);
+  animation: rotate 4s linear infinite;
+}
+
+@keyframes rotate {
+  100% { transform: rotate(360deg); }
+}
+
+/* ─── Scrollbar ───────────────────────────────────────────────── */
+.custom-scrollbar::-webkit-scrollbar        { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track  { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb  {
+  background: rgba(99, 102, 241, 0.25);
+  border-radius: 10px;
+}
+
+/* ─── Typography ─────────────────────────────────────────────── */
+.font-h1 {
+  font-family: var(--font-inter);
+  font-size: 32px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+
+.font-h2 {
+  font-family: var(--font-inter);
+  font-size: 24px;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+
+.font-label-caps {
+  font-family: var(--font-space);
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.font-mono {
+  font-family: var(--font-space);
+}

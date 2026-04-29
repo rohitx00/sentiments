@@ -1,0 +1,10 @@
+Flask
+Flask-CORS
+gunicorn
+tweepy
+scikit-learn
+python-dotenv
+pandas
+numpy
+requests
+nltk
