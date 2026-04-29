@@ -69,14 +69,13 @@ except Exception as e:
 try:
     if os.path.exists(DATASET_PATH):
         print("Loading dataset for simulation...")
-        # Check if 'text' column exists, otherwise pick the last column
-        df_sample = pd.read_csv(DATASET_PATH, nrows=0, encoding='latin-1')
-        if 'text' in df_sample.columns:
+        df_head = pd.read_csv(DATASET_PATH, nrows=0, encoding='latin-1')
+        
+        if 'text' in df_head.columns:
             tweets_df = pd.read_csv(DATASET_PATH, usecols=['text'], encoding='latin-1')
         else:
-            # Flexible: load and take the last column
-            df_full = pd.read_csv(DATASET_PATH, encoding='latin-1', header=None)
-            tweets_df = df_full.iloc[:, [-1]]
+            # Fallback for datasets without headers
+            tweets_df = pd.read_csv(DATASET_PATH, encoding='latin-1', header=None).iloc[:, [-1]]
             tweets_df.columns = ['text']
             
         print(f"Dataset loaded successfully ({len(tweets_df)} rows).")
