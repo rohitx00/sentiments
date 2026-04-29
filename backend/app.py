@@ -33,7 +33,8 @@ def stemming(content):
 import requests
 
 # Load environment variables
-load_dotenv()
+BASE_DIR = os.path.dirname(__file__)
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 app = Flask(__name__)
 CORS(app)
@@ -43,36 +44,7 @@ BASE_DIR = os.path.dirname(__file__)
 MODEL_PATH = os.path.join(BASE_DIR, 'model.pkl')
 VECTORIZER_PATH = os.path.join(BASE_DIR, 'vectorizer.pkl')
 LABEL_ENCODER_PATH = os.path.join(BASE_DIR, 'label_encoder.pkl')
-DATASET_DIR = os.path.join(BASE_DIR, 'dataset')
-DATASET_PATH = os.path.join(DATASET_DIR, 'twitter.csv')
-GDRIVE_FILE_ID = os.getenv('GDRIVE_FILE_ID')
-
-def download_file_from_google_drive(file_id, destination):
-    if not file_id:
-        print("No GDRIVE_FILE_ID found in .env. Skipping download.")
-        return False
-    
-    print(f"Downloading dataset from Google Drive (ID: {file_id})...")
-    try:
-        if not os.path.exists(DATASET_DIR):
-            os.makedirs(DATASET_DIR)
-        
-        URL = "https://docs.google.com/uc?export=download&confirm=t"
-        session = requests.Session()
-        response = session.get(URL, params={'id': file_id}, stream=True)
-        
-        with open(destination, "wb") as f:
-            for chunk in response.iter_content(32768):
-                if chunk: f.write(chunk)
-        print("Download complete.")
-        return True
-    except Exception as e:
-        print(f"Download failed: {e}")
-        return False
-
-# Download dataset if missing
-if not os.path.exists(DATASET_PATH) and GDRIVE_FILE_ID:
-    download_file_from_google_drive(GDRIVE_FILE_ID, DATASET_PATH)
+DATASET_PATH = os.path.join(BASE_DIR, 'dataset', 'twitter.csv')
 
 model = None
 vectorizer = None
@@ -97,10 +69,19 @@ except Exception as e:
 try:
     if os.path.exists(DATASET_PATH):
         print("Loading dataset for simulation...")
-        tweets_df = pd.read_csv(DATASET_PATH, usecols=['text'], encoding='latin-1')
-        print("Dataset loaded successfully.")
+        # Check if 'text' column exists, otherwise pick the last column
+        df_sample = pd.read_csv(DATASET_PATH, nrows=0, encoding='latin-1')
+        if 'text' in df_sample.columns:
+            tweets_df = pd.read_csv(DATASET_PATH, usecols=['text'], encoding='latin-1')
+        else:
+            # Flexible: load and take the last column
+            df_full = pd.read_csv(DATASET_PATH, encoding='latin-1', header=None)
+            tweets_df = df_full.iloc[:, [-1]]
+            tweets_df.columns = ['text']
+            
+        print(f"Dataset loaded successfully ({len(tweets_df)} rows).")
     else:
-        print("twitter.csv dataset not found.")
+        print("twitter.csv dataset not found in backend/dataset/")
 except Exception as e:
     print(f"Error loading dataset: {e}")
 
